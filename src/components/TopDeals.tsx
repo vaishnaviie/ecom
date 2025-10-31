@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ProductCard from "./ProductCard";
+import { CategoryListingCard } from "../utils/HOCcards";
+import type { CategoryItemInterface, Product } from "../types/interfaces";
 
 const TopDeals = () => {
   const [productData, setProductData] = useState([]);
@@ -16,28 +17,35 @@ const TopDeals = () => {
     getData();
   }, []);
 
-  const categoryList = productData.reduce((acc: any, curr: any) => {
-    if (!acc.find((item: any) => item.category === curr.category)) {
-      acc.push(curr);
-    }
-    return acc;
-  }, []);
-
-  console.log(categoryList);
+  const categoryList = productData?.reduce(
+    (acc: CategoryItemInterface[], curr: Product) => {
+      if (
+        !acc.find(
+          (item: CategoryItemInterface) => item.category === curr.category
+        )
+      ) {
+        acc.push(curr);
+      }
+      return acc;
+    },
+    [] as CategoryItemInterface[]
+  );
 
   return (
     <div>
       <ol className=" flex gap-5 flex-wrap">
-        {categoryList.map(({ title, images, category, price, id }) => (
-          <Link key={id} to={`products/${category}`}>
-            <ProductCard
-              title={title}
-              images={images}
-              category={category}
-              price={price}
-            />
-          </Link>
-        ))}
+        {categoryList.map(
+          ({ title, images, category, price, id }: CategoryItemInterface) => (
+            <Link key={id} to={`products/${category}`}>
+              <CategoryListingCard
+                title={title}
+                images={images}
+                category={category}
+                price={price}
+              />
+            </Link>
+          )
+        )}
       </ol>
     </div>
   );

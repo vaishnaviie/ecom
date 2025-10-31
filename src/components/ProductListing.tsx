@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ProductCard from "./ProductCard";
+import { ProductListingCard } from "../utils/HOCcards";
+import type { Product } from "../types/interfaces";
 
 const ProductListing = () => {
   const { category } = useParams();
@@ -12,7 +13,7 @@ const ProductListing = () => {
     const products = await result.json();
 
     const filteredData = products?.products?.filter(
-      (data: any) => data?.category === category
+      (data: Product) => data?.category === category
     );
 
     setCategoryData(filteredData);
@@ -24,17 +25,33 @@ const ProductListing = () => {
 
   return (
     <div>
-      <ol className=" flex gap-5 flex-wrap">
-        {categoryData?.map(({ title, images, category, price, id }) => (
-          <li key={id}>
-            <ProductCard
-              title={title}
-              images={images}
-              category={category}
-              price={price}
-            />
-          </li>
-        ))}
+      <ol className=" flex gap-5 flex-wrap m-2 my-5">
+        {categoryData?.map(
+          ({
+            title,
+            images,
+            category,
+            price,
+            id,
+            brand,
+            rating,
+            thumbnail,
+            discountPercentage,
+          }) => (
+            <li key={id}>
+              <ProductListingCard
+                title={title}
+                images={images}
+                category={category}
+                price={price}
+                brand={brand}
+                rating={rating}
+                thumbnail={thumbnail}
+                discountPercentage={discountPercentage}
+              />
+            </li>
+          )
+        )}
       </ol>
     </div>
   );
