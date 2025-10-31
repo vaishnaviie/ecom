@@ -1,21 +1,11 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CategoryListingCard } from "../utils/HOCcards";
 import type { CategoryItemInterface, Product } from "../types/interfaces";
+import { useProdductData } from "../hook/useProdductData";
+import { URL } from "../utils/utils";
 
 const TopDeals = () => {
-  const [productData, setProductData] = useState([]);
-  const URL = "https://dummyjson.com/products";
-
-  const getData = async () => {
-    const res = await fetch(URL);
-    const products = await res.json();
-    setProductData(products.products);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const { productData, isLoading, error, refetch } = useProdductData(URL);
 
   const categoryList = productData?.reduce(
     (acc: CategoryItemInterface[], curr: Product) => {
@@ -31,10 +21,28 @@ const TopDeals = () => {
     [] as CategoryItemInterface[]
   );
 
+  if (isLoading) {
+    return <div>Loading products...</div>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        <p>Error: {error}</p>
+        <button
+          className=" border border-green-700 px-2 rounded bg-green-600 text-white m-2 hover:bg-green-400 cursor-pointer"
+          onClick={refetch}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div>
       <ol className=" flex gap-5 flex-wrap">
-        {categoryList.map(
+        {categoryList?.map(
           ({ title, images, category, price, id }: CategoryItemInterface) => (
             <Link key={id} to={`products/${category}`}>
               <CategoryListingCard

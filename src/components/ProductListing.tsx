@@ -1,32 +1,44 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductListingCard } from "../utils/HOCcards";
 import type { Product } from "../types/interfaces";
+import { useProdductData } from "../hook/useProdductData";
+import { URL } from "../utils/utils";
 
 const ProductListing = () => {
   const { category } = useParams();
-  const [categoryData, setCategoryData] = useState([]);
 
-  const URL = "https://dummyjson.com/products";
-  const getData = async () => {
-    const result = await fetch(URL);
-    const products = await result.json();
+  const { productData, isLoading, error, refetch } = useProdductData(URL);
 
-    const filteredData = products?.products?.filter(
-      (data: Product) => data?.category === category
+  const filteredProductData = productData?.filter(
+    (data: Product) => data?.category === category
+  );
+
+  if (isLoading) {
+    return <div>Loading products...</div>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        <p>Error: {error}</p>
+        <button
+          className=" border border-green-700 px-2 rounded bg-green-600 text-white m-2 hover:bg-green-400 cursor-pointer"
+          onClick={refetch}
+        >
+          Retry
+        </button>
+      </div>
     );
+  }
 
-    setCategoryData(filteredData);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  if (filteredProductData?.length === 0) {
+    return <div>No products found in this category.</div>;
+  }
 
   return (
     <div>
       <ol className=" flex gap-5 flex-wrap m-2 my-5">
-        {categoryData?.map(
+        {filteredProductData?.map(
           ({
             title,
             images,

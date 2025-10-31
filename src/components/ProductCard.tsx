@@ -1,4 +1,5 @@
 import type { ProductCardInterface } from "../types/interfaces";
+import { calculateMRP } from "../utils/utils";
 
 const ProductCard = ({
   title,
@@ -13,10 +14,6 @@ const ProductCard = ({
   isTitle,
   isCategory,
 }: ProductCardInterface) => {
-  const calculateMRP = (currentPrice: number, discount: number) => {
-    console.log(currentPrice, discount);
-    return currentPrice / (1 - discount / 100);
-  };
   return (
     <div className="border border-gray-300 cursor-pointer rounded flex flex-col gap-1 p-2 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-gray-400">
       <img src={images[0]} alt="image" height="400px" width="300px" />
