@@ -1,4 +1,4 @@
-import { logoUrl } from "../../utils/utils";
+import { getActualTheme, logoUrl } from "../../utils/utils";
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
 import Search from "./Search";
@@ -16,28 +16,11 @@ const Header = () => {
     { label: "Dark", value: "dark" },
   ];
 
-  const getActualTheme = () => {
-    if (theme === "default") {
-      const currentHour = new Date().getHours();
-
-      if (currentHour >= 19 || currentHour <= 4) {
-        return "dark";
-      } else {
-        return "light";
-      }
-    }
-    return theme;
-  };
-
   useEffect(() => {
-    const actualTheme = getActualTheme();
-    // Remove all theme classes
+    const actualTheme = getActualTheme(theme);
     document.documentElement.classList.remove("light", "dark");
-
-    // Add the current theme class
     document.documentElement.classList.add(actualTheme);
     localStorage.setItem("theme", actualTheme);
-    // setTheme(actualTheme);
   }, [theme]);
 
   useEffect(() => {
@@ -47,12 +30,8 @@ const Header = () => {
     }
   }, []);
 
-  console.log("theme", theme);
-
   return (
     <div>
-      {/* bg-[#dae660] */}
-
       <div className="bg-header-theme flex gap-8 justify-between items-center p-2 mb-2 px-32 ">
         <Logo logoUrl={logoUrl} />
 
@@ -70,11 +49,10 @@ const Header = () => {
 
         <div className="flex items-center gap-2 px-4">
           <LoginSvg />
-
           <span className="text-color">Login</span>
         </div>
 
-        <div className="  ">
+        <div>
           <select
             value={theme}
             onChange={(e) => setTheme(e.target.value)}
@@ -88,8 +66,6 @@ const Header = () => {
           </select>
         </div>
       </div>
-
-      {/* <div className="border-2 border-red-500 bg-primary-myGreen ">Test</div> */}
     </div>
   );
 };

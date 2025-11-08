@@ -19,3 +19,16 @@ export const getRatingColor = (num: number) => {
     return "bg-red-600";
   }
 };
+
+export const getActualTheme = (theme: string) => {
+  if (theme === "default") {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 19 || currentHour <= 4) {
+      return "dark";
+    } else {
+      return "light";
+    }
+  }
+  return theme;
+};

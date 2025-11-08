@@ -38,7 +38,7 @@ const SearchSuggestions = ({
                 >
                   {product?.productName && (
                     <div className=" text-gray-400">
-                      {highlightText(product.productName, searchInput)}
+                      {highlightText(product?.productName, searchInput)}
                     </div>
                   )}{" "}
                   {product?.categoryName && (
