@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
-import ProductCard from "../components/ProductCard";
 import type { ProductCardInterface } from "../types/interfaces";
+import ProductCard from "../components/main/ProductCard";
 
 const withCategoryListingVariant = (
   Component: ComponentType<ProductCardInterface>

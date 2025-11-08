@@ -37,3 +37,27 @@ export interface CategoryItemInterface {
   category: string;
   price: number;
 }
+
+export interface FilteredItemInterface {
+  id?: number;
+  title?: string;
+  category?: string;
+  brand?: string;
+  productName?: string;
+  categoryName?: string;
+  brandName?: string;
+  tag?: string;
+}
+
+export interface SearchInterface {
+  searchInput: string;
+  onInputChange: (value: string) => void;
+  showSuggestions: boolean;
+  filteredProducts: FilteredItemInterface[];
+}
+
+export interface SearchSuggestionsINterface {
+  showSuggestions: boolean;
+  searchInput: string;
+  filteredProducts: FilteredItemInterface[];
+}

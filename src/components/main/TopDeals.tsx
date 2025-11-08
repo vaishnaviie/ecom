@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { CategoryListingCard } from "../utils/HOCcards";
-import type { CategoryItemInterface, Product } from "../types/interfaces";
-import { useProdductData } from "../hook/useProdductData";
-import { URL } from "../utils/utils";
+import { useProdductData } from "../../hook/useProdductData";
+import type { CategoryItemInterface, Product } from "../../types/interfaces";
+import { CategoryListingCard } from "../../hoc/HOCcards";
+import { URL } from "../../utils/utils";
 
 const TopDeals = () => {
   const { productData, isLoading, error, refetch } = useProdductData(URL);
@@ -22,7 +22,7 @@ const TopDeals = () => {
   );
 
   if (isLoading) {
-    return <div>Loading products...</div>;
+    return <div className="text-color">Loading products...</div>;
   }
 
   if (error) {
@@ -41,7 +41,7 @@ const TopDeals = () => {
 
   return (
     <div>
-      <ol className=" flex gap-5 flex-wrap">
+      <ol className=" flex justify-between gap-5 flex-wrap mt-5 mx-2 ">
         {categoryList?.map(
           ({ title, images, category, price, id }: CategoryItemInterface) => (
             <Link key={id} to={`products/${category}`}>

@@ -1,1 +1,41 @@
 @import "tailwindcss";
+
+:root {
+  --bg-header-color: #dae660; /* lightThemeGreen */
+  --bg-card-color: #ffffff; /*white*/
+  --background-color: #ffffff; /*white*/
+  --text-color: #141414; /*black*/
+  --suggestion-text: #ffb300;
+}
+
+.dark {
+  --bg-header-color: #42414a; /*darkThemeGray*/
+  --bg-card-color: #42414a; /*darkThemeGray*/
+  --background-color: #141414; /*black*/
+  --text-color: #ffffff; /*white*/
+  --suggestion-text: #141414;
+}
+
+.bg-header-theme {
+  background-color: var(--bg-header-color);
+}
+
+.bg-card-theme {
+  background-color: var(--bg-card-color);
+}
+
+.background-theme {
+  background-color: var(--background-color);
+}
+
+.text-color {
+  color: var(--text-color);
+}
+
+.cart-icon {
+  fill: var(--text-color);
+}
+
+.suggestion-text-theme {
+  color: var(--suggestion-text);
+}
