@@ -38,15 +38,22 @@ export interface CategoryItemInterface {
   price: number;
 }
 
-export interface FilteredItemInterface {
-  id?: number;
-  title?: string;
-  category?: string;
-  brand?: string;
+// export interface FilteredItemInterface {
+//   id?: number;
+//   title?: string;
+//   category?: string;
+//   brand?: string;
+//   productName?: string;
+//   categoryName?: string;
+//   brandName?: string;
+//   tag?: string;
+// }
+
+export interface FilteredItemInterface extends Product {
   productName?: string;
-  categoryName?: string;
   brandName?: string;
-  tag?: string;
+  categoryName?: string;
+  tag?: "category" | "brand";
 }
 
 export interface SearchInterface {

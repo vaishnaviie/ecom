@@ -9,36 +9,41 @@ export const useSearch = () => {
   const { productData } = useProdductData(URL);
 
   const filteredProducts = useMemo(() => {
+    const brands = new Set();
+    const categories = new Set();
+    const results: FilteredItemInterface[] = [];
+
     if (!productData || searchInput.length === 0) return [];
 
-    return productData.reduce((acc: FilteredItemInterface[], curr: Product) => {
+    productData.forEach((product: Product) => {
       const searchTerm = searchInput.toLowerCase();
 
-      if (curr?.title?.toLowerCase()?.includes(searchTerm)) {
-        return [...acc, { ...curr, productName: curr?.title }];
+      if (product?.title?.toLowerCase()?.includes(searchTerm)) {
+        results.push({ ...product, productName: product?.title });
       }
 
-      if (curr?.category?.toLowerCase()?.includes(searchTerm)) {
-        const categoryExists = acc.some(
-          (prod) => prod?.categoryName === curr?.category
-        );
-        if (!categoryExists) {
-          return [
-            ...acc,
-            { ...curr, categoryName: curr?.category, tag: "category" },
-          ];
-        }
+      if (
+        product?.category?.toLowerCase()?.includes(searchTerm) &&
+        !categories?.has(product?.category)
+      ) {
+        categories.add(product?.category);
+        results.push({
+          ...product,
+          categoryName: product?.category,
+          tag: "category",
+        });
       }
 
-      if (curr?.brand?.toLowerCase()?.includes(searchTerm)) {
-        const brandExists = acc.some((prod) => prod?.brandName === curr?.brand);
-        if (!brandExists) {
-          return [...acc, { ...curr, brandName: curr?.brand, tag: "brand" }];
-        }
+      if (
+        product?.brand?.toLowerCase()?.includes(searchTerm) &&
+        !brands?.has(product?.brand)
+      ) {
+        brands.add(product.brand);
+        results.push({ ...product, brandName: product?.brand, tag: "brand" });
       }
+    });
 
-      return acc;
-    }, []);
+    return results;
   }, [productData, searchInput]);
 
   const inputChangeHandler = (value: string) => {
@@ -46,20 +51,11 @@ export const useSearch = () => {
     setShowSuggestions(value?.length > 0);
   };
 
-  // const hideSuggestions = () => {
-  //   setShowSuggestions(false);
-  // };
-
-  // const clearSearch = () => {
-  //   setSearchInput("");
-  //   setShowSuggestions(false);
-  // };
+  console.log("filteredProducts", filteredProducts);
 
   return {
     searchInput,
     inputChangeHandler,
-    // hideSuggestions,
-    // clearSearch,
     filteredProducts,
     showSuggestions,
   };
