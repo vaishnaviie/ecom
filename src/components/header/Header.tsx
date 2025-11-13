@@ -29,7 +29,6 @@ const Header = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    // <div className="bg-header-theme flex flex-wrap sm:gap-6 lg:gap-8 justify-between items-center p-2 mb-2 lg:px-32 ">
     <div className="bg-header-theme flex flex-wrap gap-3 lg:gap-8 justify-between items-center p-2 mb-2 lg:px-32 relative">
       <Logo logoUrl={logoUrl} />
       <Search

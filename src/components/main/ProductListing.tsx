@@ -3,6 +3,7 @@ import type { Product } from "../../types/interfaces";
 import { useProdductData } from "../../hook/useProdductData";
 import { URL } from "../../utils/utils";
 import { ProductListingCard } from "../../hoc/HOCcards";
+import SideBar from "./SideBar";
 
 const ProductListing = () => {
   const { category } = useParams();
@@ -36,34 +37,38 @@ const ProductListing = () => {
   }
 
   return (
-    <ol className="flex justify-between gap-5 flex-wrap pt-5 mx-2">
-      {filteredProductData?.map(
-        ({
-          title,
-          images,
-          category,
-          price,
-          id,
-          brand,
-          rating,
-          thumbnail,
-          discountPercentage,
-        }) => (
-          <li key={id}>
-            <ProductListingCard
-              title={title}
-              images={images}
-              category={category}
-              price={price}
-              brand={brand}
-              rating={rating}
-              thumbnail={thumbnail}
-              discountPercentage={discountPercentage}
-            />
-          </li>
-        )
-      )}
-    </ol>
+    <div className="flex ">
+      <SideBar />
+      {/* <ol className="flex justify-between gap-5 flex-wrap pt-5 mx-2"> */}
+      <ol className="grid grid-cols-1 sm: mx-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-5 mt-5 mx-2 ">
+        {filteredProductData?.map(
+          ({
+            title,
+            images,
+            category,
+            price,
+            id,
+            brand,
+            rating,
+            thumbnail,
+            discountPercentage,
+          }) => (
+            <li key={id}>
+              <ProductListingCard
+                title={title}
+                images={images}
+                category={category}
+                price={price}
+                brand={brand}
+                rating={rating}
+                thumbnail={thumbnail}
+                discountPercentage={discountPercentage}
+              />
+            </li>
+          )
+        )}
+      </ol>
+    </div>
   );
 };
 

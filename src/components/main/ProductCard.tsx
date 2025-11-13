@@ -29,7 +29,7 @@ const ProductCard = ({
         </div>
       )}
 
-      {isTitle && <p className="text-color">{title}</p>}
+      {isTitle && <p className="text-color truncate max-w-3xs">{title}</p>}
 
       {isRating && (
         <div className=" bg-green-700 text-white px-2 py-1 rounded text-xs font-bold w-fit">
