@@ -1,30 +1,17 @@
-import { getActualTheme, logoUrl } from "../../utils/utils";
-import { useEffect, useState } from "react";
+import { logoUrl } from "../../utils/utils";
+import { useState } from "react";
 import Logo from "./Logo";
 import Search from "./Search";
 import { CartSvg, CrossSvg, HamburgerSvg, LoginSvg } from "../../svgs/Svg";
 import { useSearch } from "../../hook/useSearch";
 import { themes } from "../../const/const";
+import { useTheme } from "../../hook/useTheme";
 
 const Header = () => {
-  const [theme, setTheme] = useState("default");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { inputChangeHandler, showSuggestions, searchInput, filteredProducts } =
     useSearch();
-
-  useEffect(() => {
-    const actualTheme = getActualTheme(theme);
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(actualTheme);
-    localStorage.setItem("theme", actualTheme);
-  }, [theme]);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem(theme);
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-  }, []);
+  const { theme, setTheme } = useTheme();
 
   const currentYear = new Date().getFullYear();
 
