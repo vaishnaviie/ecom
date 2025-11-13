@@ -51,8 +51,6 @@ export const useSearch = () => {
     setShowSuggestions(value?.length > 0);
   };
 
-  console.log("filteredProducts", filteredProducts);
-
   return {
     searchInput,
     inputChangeHandler,

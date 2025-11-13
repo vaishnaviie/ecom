@@ -3,8 +3,8 @@ const Logo = ({ logoUrl }: { logoUrl: string }) => {
     <div>
       <img
         src={logoUrl}
-        height="50px"
-        width="50px"
+        height="40px"
+        width="40px"
         alt="logo"
         className="rounded"
       />

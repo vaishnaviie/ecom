@@ -15,7 +15,7 @@ const ProductCard = ({
   isCategory,
 }: ProductCardInterface) => {
   return (
-    <div className="bg-card-theme border border-gray-300 cursor-pointer rounded flex flex-col gap-1 p-2 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-gray-400">
+    <div className="bg-card-theme border border-gray-300 cursor-pointer rounded flex flex-col  items-center gap-1 p-2 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-gray-400">
       <img src={images[0]} alt="image" height="400px" width="300px" />
 
       {isCategory && (

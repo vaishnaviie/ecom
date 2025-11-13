@@ -41,10 +41,11 @@ const TopDeals = () => {
 
   return (
     <div>
-      <ol className=" flex justify-between gap-5 flex-wrap mt-5 mx-2 ">
+      {/* <ol className=" flex justify-between gap-5 flex-wrap mt-5 mx-2 "> */}
+      <ol className=" grid grid-cols-1 sm: mx-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-5 mx-2 ">
         {categoryList?.map(
           ({ title, images, category, price, id }: CategoryItemInterface) => (
-            <Link key={id} to={`products/${category}`}>
+            <Link key={id} to={`products/${category}`} className="w-full ">
               <CategoryListingCard
                 title={title}
                 images={images}

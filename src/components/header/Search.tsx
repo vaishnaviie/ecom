@@ -12,7 +12,7 @@ const Search = ({
     <div className="bg-white flex items-center rounded gap-2 px-2 grow relative">
       <InputSvg />
       <input
-        className="grow outline-none h-10 text-xl rounded bg-white"
+        className="grow outline-none h-8 md:h-10 md:text-xl rounded bg-white"
         type="search"
         placeholder="Search"
         value={searchInput}
