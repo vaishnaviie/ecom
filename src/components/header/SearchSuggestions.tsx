@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type {
   FilteredItemInterface,
   SearchSuggestionsINterface,
@@ -8,6 +9,7 @@ const SearchSuggestions = ({
   searchInput,
   filteredProducts,
 }: SearchSuggestionsINterface) => {
+  const navigate = useNavigate();
   const highlightText = (text: string, search: string) => {
     if (!search) return text;
 
@@ -24,6 +26,17 @@ const SearchSuggestions = ({
       )
     );
   };
+
+  const clickHandler = (product: FilteredItemInterface) => {
+    if (product.tag === "category") {
+      navigate(`/products/${product.category}`);
+    } else if (product.tag === "brand") {
+      navigate(`/products/${product.brand}`);
+    } else {
+      navigate(`/products/${product.category}/${product.title}`);
+    }
+  };
+
   return (
     <>
       {showSuggestions &&
@@ -35,6 +48,7 @@ const SearchSuggestions = ({
                 <div
                   key={i}
                   className=" border-b pl-2 min-h-10 flex flex-col justify-center "
+                  onClick={() => clickHandler(product)}
                 >
                   {product?.productName && (
                     <div className=" text-gray-400">

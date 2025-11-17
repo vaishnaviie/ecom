@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 // types/product.types.ts
 export interface Product {
   id: number;
@@ -11,6 +13,7 @@ export interface Product {
   category: string;
   thumbnail: string;
   images: string[];
+  // discount?: number;
 }
 
 export interface ProductCardInterface {
@@ -67,4 +70,15 @@ export interface SearchSuggestionsINterface {
   showSuggestions: boolean;
   searchInput: string;
   filteredProducts: FilteredItemInterface[];
+}
+
+export interface MobViewHeaderInterface {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface LayoutProps {
+  children: ReactNode;
+  // data: Product[];
+  url: string;
 }

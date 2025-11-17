@@ -1,22 +1,22 @@
 import { useMemo, useState } from "react";
 import type { FilteredItemInterface, Product } from "../types/interfaces";
-import { useProdductData } from "./useProdductData";
-import { URL } from "../utils/utils";
+import { useDebounce } from "./useDebounce";
 
-export const useSearch = () => {
+export const useSearch = (productData: Product[]) => {
   const [searchInput, setSearchInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const { productData } = useProdductData(URL);
+  const debouncedSearchInput = useDebounce(searchInput, 300);
+  console.log("debouncedSearchInput", debouncedSearchInput);
 
   const filteredProducts = useMemo(() => {
     const brands = new Set();
     const categories = new Set();
     const results: FilteredItemInterface[] = [];
 
-    if (!productData || searchInput.length === 0) return [];
+    if (!productData || debouncedSearchInput.length === 0) return [];
 
     productData.forEach((product: Product) => {
-      const searchTerm = searchInput.toLowerCase();
+      const searchTerm = debouncedSearchInput.toLowerCase();
 
       if (product?.title?.toLowerCase()?.includes(searchTerm)) {
         results.push({ ...product, productName: product?.title });
@@ -44,7 +44,7 @@ export const useSearch = () => {
     });
 
     return results;
-  }, [productData, searchInput]);
+  }, [productData, debouncedSearchInput]);
 
   const inputChangeHandler = (value: string) => {
     setSearchInput(value);

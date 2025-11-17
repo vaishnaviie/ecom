@@ -1,14 +1,12 @@
-import Footer from "../components/footer/Footer";
-import Header from "../components/header/Header";
+import Layout from "../components/layout/Layout";
 import Main from "../components/main/Main";
+import { URL } from "../utils/utils";
 
 const Home = () => {
   return (
-    <div className="">
-      <Header />
+    <Layout url={URL}>
       <Main />
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

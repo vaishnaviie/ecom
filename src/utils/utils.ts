@@ -4,7 +4,6 @@ export const logoUrl =
   "https://i.pinimg.com/1200x/4d/02/6e/4d026ea519059084425e8da800647c63.jpg";
 
 export const calculateMRP = (currentPrice: number, discount: number) => {
-  console.log(currentPrice, discount);
   return currentPrice / (1 - discount / 100);
 };
 
