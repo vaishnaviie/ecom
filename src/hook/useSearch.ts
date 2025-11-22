@@ -6,7 +6,6 @@ export const useSearch = (productData: Product[]) => {
   const [searchInput, setSearchInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const debouncedSearchInput = useDebounce(searchInput, 300);
-  console.log("debouncedSearchInput", debouncedSearchInput);
 
   const filteredProducts = useMemo(() => {
     const brands = new Set();

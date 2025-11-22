@@ -18,26 +18,36 @@ interface FilterContextType {
   filteredProductData: Product[] | null;
   setProduct: (updates: Partial<ProductFilter>) => void;
   product: ProductFilter;
+  maxPrice: number;
+  minPrice: number;
 }
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
 const FilterContextProvider = ({ children }: FilterContextProviderProps) => {
   const { category } = useParams();
-
-  const [product, setProduct] = useState<ProductFilter>({
-    range: 999,
-    rating: 0,
-    discount: 0,
-    sorting: "popularty",
-  });
-
   const url = `https://dummyjson.com/products/category/${category}`;
-
   const { productData } = useProdductData(url);
 
   const filteredProductData =
     productData?.filter((data: Product) => data?.category === category) ?? [];
+
+  const minPrice = filteredProductData?.reduce(
+    (curr: Product, acc: Product) => (curr.price < acc.price ? curr : acc),
+    filteredProductData[0]
+  )?.price;
+
+  const maxPrice = filteredProductData?.reduce(
+    (curr: Product, acc: Product) => (curr.price > acc.price ? curr : acc),
+    filteredProductData[0]
+  )?.price;
+
+  const [product, setProduct] = useState<ProductFilter>({
+    range: maxPrice,
+    rating: 0,
+    discount: 0,
+    sorting: "popularty",
+  });
 
   const rangeFilter =
     product.range > 0
@@ -57,8 +67,6 @@ const FilterContextProvider = ({ children }: FilterContextProviderProps) => {
           (data: Product) => data.discountPercentage >= product.discount
         )
       : radioFilter;
-
-  console.log(radioFilter);
 
   const sortedData = [...discountFilter].sort((a: Product, b: Product) => {
     switch (product.sorting) {
@@ -84,13 +92,14 @@ const FilterContextProvider = ({ children }: FilterContextProviderProps) => {
     setProduct((prev) => ({ ...prev, ...updates }));
   };
 
-  console.log(product.range);
   return (
     <FilterContext.Provider
       value={{
         filteredProductData: sortedData,
         setProduct: updateProduct,
         product,
+        maxPrice,
+        minPrice,
       }}
     >
       {children}

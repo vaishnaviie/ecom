@@ -1,7 +1,8 @@
 import { useFilter } from "../../context/FilterContextProvider";
 
 const SideBar = () => {
-  const { product, setProduct } = useFilter();
+  const { product, setProduct, maxPrice, minPrice } = useFilter();
+
   return (
     <div className="w-[25%] border border-red-600 p-4">
       <div className="flex justify-between">
@@ -20,21 +21,32 @@ const SideBar = () => {
         </button>
       </div>
 
-      <div>
+      <div className=" ">
         Range
-        <label className="block">
+        <label className="block ">
           <input
-            className=" cursor-pointer"
+            className=" cursor-pointer "
             type="range"
-            min={0}
-            max={9999}
+            min={minPrice}
+            max={maxPrice}
             value={product.range}
             onChange={(e) => setProduct({ range: Number(e.target.value) })}
             // onChange={(e) =>setProduct((prev:any) => ({ ...prev, range: Number(e.target.value) }));}
           />
         </label>
-        <div className=" text-xs font-semibold">
-          current price range:{product.range}
+        <div className="flex justify-between w-[40%] ">
+          <div className="outline-gray-500 w-10 text-xs">${minPrice}</div>
+          <div className="outline-gray-500 w-10 text-xs">${maxPrice}</div>
+          {/* <input
+            type="number"
+            value={minPrice}
+            className="  outline-gray-500 w-10 text-xs"
+          /> */}
+          {/* <input
+            type="number"
+            value={maxPrice}
+            className=" outline-gray-500 w-10 text-xs"
+          /> */}
         </div>
       </div>
 
