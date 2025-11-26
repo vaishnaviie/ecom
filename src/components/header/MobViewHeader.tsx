@@ -1,5 +1,6 @@
 import { themes, currentYear } from "../../const/const";
-import { useTheme } from "../../hook/useTheme";
+import { useTheme } from "../../context/ThemeContextProvider";
+// import { useTheme } from "../../hook/useTheme";
 import { CrossSvg, LoginSvg } from "../../svgs/Svg";
 import type { MobViewHeaderInterface } from "../../types/interfaces";
 

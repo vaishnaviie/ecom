@@ -60,16 +60,7 @@ const SinglePage = () => {
                 />
               ))}
             </div>
-            {/* <ProductImage /> */}
-            <div>
-              <img
-                className="border border-gray-400 rounded"
-                src={displayedProductImage}
-                alt="product image"
-                width="600px"
-                height="600px"
-              />
-            </div>
+            <ProductImage img={displayedProductImage} />
           </div>
           <div className="flex gap-6 justify-end my-2">
             <button className="border border-red-600 p-2 px-20 text-xl cursor-pointer rounded">

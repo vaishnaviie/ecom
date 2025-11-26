@@ -5,10 +5,11 @@ import Search from "./Search";
 import { CartSvg, HamburgerSvg, LoginSvg } from "../../svgs/Svg";
 import { useSearch } from "../../hook/useSearch";
 import { themes } from "../../const/const";
-import { useTheme } from "../../hook/useTheme";
+// import { useTheme } from "../../hook/useTheme";
 import MobViewHeader from "./MobViewHeader";
 import { useProdductData } from "../../hook/useProdductData";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../../context/ThemeContextProvider";
 
 export interface HeaderProps {
   url: string;
