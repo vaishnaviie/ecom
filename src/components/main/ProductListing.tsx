@@ -14,20 +14,8 @@ const ProductListing = () => {
 
   const url = `https://dummyjson.com/products/category/${category}`;
 
-  // const { productData } = useProdductData(url);
-
-  // const { productData, isLoading, error, refetch } = useProdductData(url);
   const { isLoading, error, refetch } = useProdductData(url);
-  const { filteredProductData } = useFilter();
-
-  // const filteredProductData = productData?.filter(
-  //   (data: Product) => data?.category === category
-  // );
-
-  // const filteredProductData =
-  //   productData?.filter((data: Product) => data?.category === category) ?? [];
-
-  // console.log("filteredProductData", filteredProductData);
+  const { filteredProductData, setTags, tags } = useFilter();
 
   if (isLoading) {
     return <div>Loading products...</div>;
@@ -47,13 +35,11 @@ const ProductListing = () => {
     );
   }
 
-  // if (filteredProductData?.length === 0) {
-  //   return <div>No products found in this category.</div>;
-  // }
-
   const clickHandler = (title: string, category: string) => {
     navigate(`/products/${category}/${title}`);
   };
+
+  console.log(tags);
 
   return (
     <Layout url={url}>
@@ -62,12 +48,63 @@ const ProductListing = () => {
         <div>
           <select
             value={product.sorting}
-            onChange={(e) => setProduct({ sorting: e.target.value })}
+            onChange={(e) => {
+              setProduct({ sorting: e.target.value });
+              const sortedValue = sorting.find(
+                (data: any) => data.value === e.target.value
+              );
+              setTags({ sorting: String(sortedValue?.label) });
+            }}
           >
             {sorting.map(({ label, value }) => (
               <option value={value}>{label}</option>
             ))}
           </select>
+
+          {/* <div className="flex gap-2">
+            <div className=" px-2 border border-green-800 min-w-16 py-1 flex justify-between gap-2">
+              {tags?.rating}
+              <button className="border border-red-700 px-1 ">x</button>
+            </div>
+
+            <div className=" px-2 border border-green-800 min-w-16 py-1 flex justify-between gap-2">
+              {tags?.discount}
+              <button className="border border-red-700 px-1 ">x</button>
+            </div>
+
+            {tags.sorting && (
+              <div className=" px-2 border border-green-800 min-w-16 py-1 flex justify-between gap-2">
+                {tags?.sorting}
+                <button
+                  onClick={() => setTags({ sorting: "" })}
+                  className="border border-red-700 px-1 "
+                >
+                  x
+                </button>
+              </div>
+            )}
+          </div> */}
+          <div className="flex gap-2">
+            {Object.entries(tags)
+              .filter(([key, value]) => value)
+              .map(([key, value]) => (
+                <div
+                  key={key}
+                  className=" px-2 border border-green-800 min-w-16 py-1 flex justify-between gap-2"
+                >
+                  {value}
+                  <button
+                    onClick={() => {
+                      setTags({ [key]: "" });
+                      setProduct({ [key]: "" });
+                    }}
+                    className="border border-red-700 px-1  cursor-pointer "
+                  >
+                    x
+                  </button>
+                </div>
+              ))}
+          </div>
 
           <ol className="grid grid-cols-1 sm: mx-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-5 mt-5 mx-2 ">
             {filteredProductData?.length === 0

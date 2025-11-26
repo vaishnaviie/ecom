@@ -14,17 +14,30 @@ interface ProductFilter {
   sorting: string;
 }
 
+interface Tags {
+  rating?: string;
+  discount?: string;
+  sorting?: string;
+}
+
 interface FilterContextType {
   filteredProductData: Product[] | null;
   setProduct: (updates: Partial<ProductFilter>) => void;
   product: ProductFilter;
   maxPrice: number;
   minPrice: number;
+  tags: Tags;
+  setTags: (updates: Partial<Tags>) => void;
 }
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
 const FilterContextProvider = ({ children }: FilterContextProviderProps) => {
+  const [tags, setTags] = useState<Tags>({
+    rating: "",
+    discount: "",
+    sorting: "",
+  });
   const { category } = useParams();
   const url = `https://dummyjson.com/products/category/${category}`;
   const { productData } = useProdductData(url);
@@ -92,6 +105,12 @@ const FilterContextProvider = ({ children }: FilterContextProviderProps) => {
     setProduct((prev) => ({ ...prev, ...updates }));
   };
 
+  const updateTags = (updates: Partial<Tags>) => {
+    setTags((prev) => ({ ...prev, ...updates }));
+  };
+
+  console.log("tags", tags);
+
   return (
     <FilterContext.Provider
       value={{
@@ -100,6 +119,8 @@ const FilterContextProvider = ({ children }: FilterContextProviderProps) => {
         product,
         maxPrice,
         minPrice,
+        tags,
+        setTags: updateTags,
       }}
     >
       {children}
