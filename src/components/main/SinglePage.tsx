@@ -44,18 +44,18 @@ const SinglePage = () => {
   }
 
   return (
-    <div className=" mx-8 my-4">
+    <div className=" px-8 py-4 text-color">
       <div className=" grid grid-cols-2 gap-2">
         <div>
           <div className="flex gap-4 items-center">
-            <div className="">
+            <div className=" flex flex-col gap-2">
               {product?.images?.map((img: string) => (
                 <img
                   src={img}
                   alt="product image"
                   width="150px"
                   height="150px"
-                  className=" cursor-pointer border border-gray-300 rounded "
+                  className=" cursor-pointer border border-gray-300 rounded bg-card-theme "
                   onClick={() => setDisplayedProductImage(img)}
                 />
               ))}
