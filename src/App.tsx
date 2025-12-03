@@ -1,4 +1,6 @@
 import "./App.css";
+import Cart from "./components/header/Cart";
+import AllProducts from "./components/main/AllProducts";
 import ProductListing from "./components/main/ProductListing";
 import SinglePage from "./components/main/SinglePage";
 import FilterContextProvider from "./context/FilterContextProvider";
@@ -20,6 +22,8 @@ function App() {
             }
           />
           <Route path="/products/:category/:title" element={<SinglePage />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/all_products" element={<AllProducts />} />
         </Routes>
       </Rounter>
     </div>

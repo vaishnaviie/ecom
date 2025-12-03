@@ -31,3 +31,20 @@ export const getActualTheme = (theme: string) => {
   }
   return theme;
 };
+
+// class Utils {
+//   constructor() {}
+
+//   getActualTheme = (theme: string) => {
+//     if (theme === "default") {
+//       const currentHour = new Date().getHours();
+
+//       if (currentHour >= 19 || currentHour <= 4) {
+//         return "dark";
+//       } else {
+//         return "light";
+//       }
+//     }
+//     return theme;
+//   };
+// }

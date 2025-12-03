@@ -6,6 +6,7 @@
   --background-color: #ffffff; /*white*/
   --text-color: #141414; /*black*/
   --suggestion-text: #ffb300;
+  --btn-disabled: #e2e8f0;
 }
 
 .dark {
@@ -14,6 +15,7 @@
   --background-color: #141414; /*black*/
   --text-color: #ffffff; /*white*/
   --suggestion-text: #141414;
+  --btn-disabled: #2d3748;
 }
 
 .bg-header-theme {
@@ -38,4 +40,8 @@
 
 .suggestion-text-theme {
   color: var(--suggestion-text);
+}
+
+.btn-disabled {
+  background-color: var(--btn-disabled);
 }

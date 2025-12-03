@@ -24,13 +24,15 @@ const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
     const actualTheme = getActualTheme(theme);
     document.documentElement.classList.remove("light", "dark");
     document.documentElement.classList.add(actualTheme);
-    localStorage.setItem("theme", actualTheme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem(theme);
+    const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
       setTheme(savedTheme);
+    } else {
+      setTheme("default");
     }
   }, []);
   return (

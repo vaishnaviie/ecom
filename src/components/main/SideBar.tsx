@@ -5,7 +5,7 @@ const SideBar = () => {
     useFilter();
 
   return (
-    <div className="w-[25%] border border-gray-300 p-4 bg-card-theme">
+    <div className="w-[25%] border border-gray-300 p-4 bg-card-theme ">
       <div className="flex justify-between">
         <h2 className=" font-bold text-2xl text-color">Filters</h2>
         <button

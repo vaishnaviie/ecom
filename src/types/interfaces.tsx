@@ -13,7 +13,9 @@ export interface Product {
   category: string;
   thumbnail: string;
   images: string[];
-  // discount?: number;
+  returnPolicy?: string;
+  warrantyInformation?: string;
+  weight?: number;
 }
 
 export interface ProductCardInterface {
