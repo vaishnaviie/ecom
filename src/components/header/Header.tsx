@@ -10,6 +10,8 @@ import MobViewHeader from "./MobViewHeader";
 import { useProdductData } from "../../hook/useProdductData";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContextProvider";
+import { useSelector } from "react-redux";
+import type { CartState } from "../../feature/cart/cartSlice";
 
 export interface HeaderProps {
   url: string;
@@ -22,6 +24,7 @@ const Header = ({ url }: HeaderProps) => {
     useSearch(productData);
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
+  const cart = useSelector((state: CartState) => state.myCart.cart);
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
@@ -39,8 +42,16 @@ const Header = ({ url }: HeaderProps) => {
         filteredProducts={filteredProducts}
       />
 
-      <div className="flex items-center md:gap-2 md:px-4">
-        <CartSvg />
+      <div
+        className="flex items-center md:gap-2 md:px-4 cursor-pointer"
+        onClick={() => navigate("/cart")}
+      >
+        <div className="relative ">
+          <CartSvg />
+          <div className=" absolute -top-2.5 -right-3 flex items-center justify-center m-0 rounded-full text-xs h-6 w-6 bg-black text-white">
+            {cart.length}
+          </div>
+        </div>
         <span className="hidden md:block text-color">Cart</span>
       </div>
 

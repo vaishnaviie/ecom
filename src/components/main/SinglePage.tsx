@@ -5,20 +5,30 @@ import { useEffect, useState } from "react";
 import { calculateMRP, URL } from "../../utils/utils";
 import { ProductListingCard } from "../../hoc/HOCcards";
 import type { Product } from "../../types/interfaces";
-import { useCart } from "../../context/CartContextProvider";
 import Layout from "../layout/Layout";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  isProductInCartt,
+  removeFromCart,
+} from "../../feature/cart/cartSlice";
 
 const SinglePage = () => {
   const { title } = useParams();
   const navigate = useNavigate();
-  const { cart, handleAddToCart, setIsProductInCart, isProductInCart } =
-    useCart();
+  // const { cart, handleAddToCart, setIsProductInCart, isProductInCart } =
+  //   useCart();
+
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: any) => state.myCart.cart);
 
   const { productData, isLoading, error, refetch } = useProdductData(
     `https://dummyjson.com/products/search?q=${title}`
   );
 
   const product = productData?.[0];
+
+  const productInCart = useSelector(isProductInCartt(product?.id));
 
   console.log("productData", productData);
 
@@ -30,14 +40,14 @@ const SinglePage = () => {
     }
   }, [product]);
 
-  useEffect(() => {
-    if (cart.length > 0) {
-      const productInCart = cart.some(
-        (prod: Product) => prod.id === product?.id
-      );
-      setIsProductInCart(productInCart);
-    }
-  }, [cart, product]);
+  // useEffect(() => {
+  //   if (cart.length > 0) {
+  //     const productInCart = cart.some(
+  //       (prod: Product) => prod.id === product?.id
+  //     );
+  //     setIsProductInCart(productInCart);
+  //   }
+  // }, [cart, product]);
 
   const handleGoToCart = () => {
     navigate("/cart");
@@ -61,7 +71,16 @@ const SinglePage = () => {
     );
   }
 
-  console.log("cart", cart);
+  // console.log("cart", cart);
+  console.log("cartItems", cartItems);
+
+  const handleClick = (product: Product) => {
+    console.log(productInCart);
+
+    // dispatch(removeFromCart(product))
+
+    productInCart ? handleGoToCart() : dispatch(addToCart(product));
+  };
 
   return (
     <Layout url={URL}>
@@ -85,14 +104,15 @@ const SinglePage = () => {
             </div>
             <div className="flex gap-6 justify-end my-2">
               <button
-                onClick={
-                  isProductInCart
-                    ? handleGoToCart
-                    : () => handleAddToCart(product)
-                }
+                // onClick={
+                //   isProductInCart
+                //     ? handleGoToCart
+                //     : () => handleAddToCart(product)
+                // }
+                onClick={() => handleClick(product)}
                 className="border border-red-600 p-2 px-20 text-xl cursor-pointer rounded"
               >
-                {isProductInCart ? "Go to cart" : "Add to Cart"}
+                {productInCart ? "Go to cart" : "Add to Cart"}
               </button>
               <button className="border border-red-600 p-2 px-20 text-xl cursor-pointer rounded">
                 Add to Wishlist
